@@ -675,8 +675,19 @@ class PulsarParameters:
             raise IOError(
                 "Problem reading in pulsar parameter file '{}'".format(filename)
             )
-
+       
         self._pulsarparameters = pp
+
+        # allow inputs of start and end times for transient signals
+        with open(filename, "r") as fp:
+            for line in fp.readlines():
+                data = line.split()
+                if data[0] == "TSTART":
+                    self["TSTART"] = float(data[1])
+                elif data[0] == "TEND":
+                    self["TEND"] = float(data[1])
+                else:
+                    continue
 
         # store copy of the contents of the par file
         with open(filename, "r") as fp:
