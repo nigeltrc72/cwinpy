@@ -403,8 +403,33 @@ class HeterodynedCWSimulator(object):
             self.resp,
         )
 
+        if "TSTART" in parupdate.keys() and "TEND" in parupdate.keys():
+            start_found = False
+            end_found = False
+            for i in range(len(self.times)):
+                if self.times[i] >= parupdate["TSTART"] and not start_found:
+                    start_index = i
+                    start_found = True
+                elif self.times[i] >= parupdate["TEND"] and not end_found:
+                    end_index = i
+                    end_found = True
+                else:
+                    continue
+        else:
+            start_index = 0
+            end_index = len(self.times) - 1
+
+        mask = np.ones(len(self.times))
+        for n in range(len(mask)):
+            if n < start_index or n > end_index:
+                mask[n] = 0
+            else:
+                continue
+
+        strain = compstrain.data.data * mask
+
         if (not outputampcoeffs and newpar is None) or roq or outputampcoeffs:
-            return compstrain.data.data
+            return strain
         else:
             from .heterodyne.fastheterodyne import fast_heterodyne
 
@@ -502,7 +527,7 @@ class HeterodynedCWSimulator(object):
                 self._phasediff = freqfactor * (phaseorig - phasenew).astype(float)
 
             # re-heterodyne with phase difference
-            return fast_heterodyne(compstrain.data.data, self.phasediff)
+            return fast_heterodyne(strain, self.phasediff)
 
     def _read_par(self, par):
         """
