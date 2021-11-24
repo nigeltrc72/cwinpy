@@ -4,3 +4,5 @@ h0 = Uniform(name='h0', minimum=0, maximum=1e-22, latex_label='$h_0$', boundary=
 iota = Sine(name='iota', minimum=0., maximum=np.pi, latex_label='$\iota$', unit='rad', boundary='reflective')
 phi0 = Uniform(name='phi0', minimum=0, maximum=np.pi, latex_label='$\phi_0$', unit='rad', boundary='reflective')
 psi = Uniform(name='psi', minimum=0, maximum=np.pi / 2, latex_label='$\psi$', unit='rad', boundary='reflective')
+TSTART = Uniform(name='TSTART', minimum=1000000000.0, maximum=1000010000.0, latex_label='$t_s$', boundary='reflective')
+TEND = Uniform(name='TEND', minimum=1000070000.0, maximum=1000090000.0, latex_label='$t_s$', boundary='reflective')

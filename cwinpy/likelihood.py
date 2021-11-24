@@ -153,6 +153,8 @@ class TargetedPulsarLikelihood(bilby.core.likelihood.Likelihood):
         "FB",
     ]
 
+    TRANSIENT_PARAMS = ["TSTART", "TEND"]
+
     # the parameters that are held as vectors
     VECTOR_PARAMS = ["F", "GLEP", "GLPH", "GLF0", "GLF1", "GLF2", "GLF0D", "GLTD", "FB"]
 
@@ -206,6 +208,7 @@ class TargetedPulsarLikelihood(bilby.core.likelihood.Likelihood):
                 not in self.AMPLITUDE_PARAMS
                 + self.BINARY_PARAMS
                 + self.POSITIONAL_PARAMETERS
+                + self.TRANSIENT_PARAMS
             ) and not self._is_vector_param(key.upper()):
                 raise ValueError("Unknown parameter '{}' being used!".format(key))
 
