@@ -267,8 +267,7 @@ class TargetedPulsarLikelihood(bilby.core.likelihood.Likelihood):
 
         # if phase evolution is not in the model set the pre-summed products
         # of the data and antenna patterns
-        if not self.include_phase:
-            self.dot_products()
+        self.dot_products()
 
     @property
     def likelihood(self):

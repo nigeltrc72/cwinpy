@@ -403,9 +403,12 @@ class HeterodynedCWSimulator(object):
             self.resp,
         )
 
+        transient = False
+
         if "TSTART" in parupdate.keys() and "TEND" in parupdate.keys():
             start_found = False
             end_found = False
+            transient = True
             for i in range(len(self.times)):
                 if self.times[i] >= parupdate["TSTART"] and not start_found:
                     start_index = i
@@ -428,7 +431,7 @@ class HeterodynedCWSimulator(object):
 
         strain = compstrain.data.data * mask
 
-        if (not outputampcoeffs and newpar is None) or roq or outputampcoeffs:
+        if (not outputampcoeffs and (newpar is None or transient)) or roq or outputampcoeffs:
             return strain
         else:
             from .heterodyne.fastheterodyne import fast_heterodyne
