@@ -404,6 +404,8 @@ class HeterodynedCWSimulator(object):
         )
 
         transient = False
+        start_index = 0
+        end_index = len(self.times) - 1
 
         if "TSTART" in parupdate.keys() and "TEND" in parupdate.keys():
             start_found = False
@@ -418,9 +420,6 @@ class HeterodynedCWSimulator(object):
                     end_found = True
                 else:
                     continue
-        else:
-            start_index = 0
-            end_index = len(self.times) - 1
 
         mask = np.ones(len(self.times))
         for n in range(len(mask)):
