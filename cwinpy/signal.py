@@ -407,7 +407,7 @@ class HeterodynedCWSimulator(object):
         start_index = 0
         end_index = len(self.times) - 1
 
-        if "TSTART" in parupdate.keys() and "TEND" in parupdate.keys():
+        if "TSTART" in parupdate.keys() and "DURATION" in parupdate.keys():
             start_found = False
             end_found = False
             transient = True
@@ -415,7 +415,7 @@ class HeterodynedCWSimulator(object):
                 if self.times[i] >= parupdate["TSTART"] and not start_found:
                     start_index = i
                     start_found = True
-                elif self.times[i] >= parupdate["TEND"] and not end_found:
+                elif (self.times[i] >= parupdate["TSTART"] + parupdate["DURATION"]) and not end_found:
                     end_index = i
                     end_found = True
                 else:

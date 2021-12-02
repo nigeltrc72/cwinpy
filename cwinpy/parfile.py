@@ -684,8 +684,8 @@ class PulsarParameters:
                 data = line.split()
                 if data[0] == "TSTART":
                     self["TSTART"] = float(data[1])
-                elif data[0] == "TEND":
-                    self["TEND"] = float(data[1])
+                elif data[0] == "DURATION":
+                    self["DURATION"] = float(data[1])
                 else:
                     continue
 

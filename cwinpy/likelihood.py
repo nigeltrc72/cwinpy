@@ -153,7 +153,7 @@ class TargetedPulsarLikelihood(bilby.core.likelihood.Likelihood):
         "FB",
     ]
 
-    TRANSIENT_PARAMS = ["TSTART", "TEND"]
+    TRANSIENT_PARAMS = ["TSTART", "DURATION"]
 
     # the parameters that are held as vectors
     VECTOR_PARAMS = ["F", "GLEP", "GLPH", "GLF0", "GLF1", "GLF2", "GLF0D", "GLTD", "FB"]
