@@ -1,5 +1,6 @@
 import os
 import re
+from erfa.core import dat
 
 import lal
 import lalpulsar
@@ -686,6 +687,8 @@ class PulsarParameters:
                     self["TSTART"] = float(data[1])
                 elif data[0] == "DURATION":
                     self["DURATION"] = float(data[1])
+                elif data[0] == "TAU":
+                    self["TAU"] = float(data[1])
                 else:
                     continue
 

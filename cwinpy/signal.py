@@ -1,3 +1,4 @@
+import math
 import lal
 import lalpulsar
 import numpy as np
@@ -403,11 +404,15 @@ class HeterodynedCWSimulator(object):
             self.resp,
         )
 
+        if "TAU" in parupdate.keys() and "DURATION" in parupdate.keys():
+            raise Exception("Parameter file cannot contain 'DURATION' and 'TAU'")
+
         transient = False
         start_index = 0
         end_index = len(self.times) - 1
 
-        if "TSTART" in parupdate.keys() and "DURATION" in parupdate.keys():
+        #Finding the indexes for a transient signal
+        if "TSTART" in parupdate.keys():
             start_found = False
             end_found = False
             transient = True
@@ -415,18 +420,27 @@ class HeterodynedCWSimulator(object):
                 if self.times[i] >= parupdate["TSTART"] and not start_found:
                     start_index = i
                     start_found = True
-                elif (self.times[i] >= parupdate["TSTART"] + parupdate["DURATION"]) and not end_found:
-                    end_index = i
-                    end_found = True
+                if "DURATION" in parupdate.keys():
+                    if (self.times[i] >= parupdate["TSTART"] + parupdate["DURATION"]) and not end_found:
+                        end_index = i
+                        end_found = True
                 else:
                     continue
 
+        #Implementing a 'mask' function
         mask = np.ones(len(self.times))
-        for n in range(len(mask)):
-            if n < start_index or n > end_index:
-                mask[n] = 0
-            else:
-                continue
+        if "TAU" in parupdate.keys():
+            for n in range(len(mask)):
+                if n < start_index:
+                    mask[n] = 0
+                else:
+                    mask[n] = math.exp(-(self.times[n] - parupdate["TSTART"])/parupdate["TAU"])
+        else:
+            for n in range(len(mask)):
+                if n < start_index or n > end_index:
+                    mask[n] = 0
+                else:
+                    continue
 
         strain = compstrain.data.data * mask
 
