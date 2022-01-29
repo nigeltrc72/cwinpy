@@ -404,8 +404,8 @@ class HeterodynedCWSimulator(object):
             self.resp,
         )
 
-        if "TAU" in parupdate.keys() and "DURATION" in parupdate.keys():
-            raise Exception("Parameter file cannot contain 'DURATION' and 'TAU'")
+        #if "TAU" in parupdate.keys() and "DURATION" in parupdate.keys():
+            #raise Exception("Parameter file cannot contain 'DURATION' and 'TAU'")
 
         transient = False
         start_index = 0

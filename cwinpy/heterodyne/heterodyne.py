@@ -1247,7 +1247,7 @@ class HeterodyneDAGRunner(object):
                 [earthephemeris, sunephemeris, timeephemeris], ["earth", "sun", "time"]
             ):
                 if (
-                    len(set([os.path.basename(edat[etype]) for etype in edat])) == 1
+                    len(set([os.path.basename(edat[etype]) for etype in edat])) != len(edat)
                     and len(edat) > 1
                 ):
                     for etype in edat:
@@ -1769,7 +1769,7 @@ def heterodyne_dag(**kwargs):
                 if pulsar is None:
                     raise ValueError("No pulsar parameter files have be provided")
 
-                pulsars.extend(pulsar if isinstance(list) else [pulsar])
+                pulsars.extend(pulsar if isinstance(pulsar, list) else [pulsar])
 
                 # get sample rate
                 srate = (
